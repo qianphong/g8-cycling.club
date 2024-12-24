@@ -5,10 +5,13 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
 import { FullscreenIcon } from 'lucide-react'
+import { useAtomValue } from 'jotai'
+import { isVerifiedAtom } from '@/store'
 
 export const MapView: Component<{
   data: AthleteData
 }> = ({ data }) => {
+  const isVerified = useAtomValue(isVerifiedAtom)
   const map = useRef<AMap.Map | null>(null)
   const workerRef = useRef<Worker | null>(null)
   const polylineLayout = useRef<AMap.Overlay | null>(null)
@@ -134,9 +137,11 @@ export const MapView: Component<{
             <FullscreenIcon />
           </Button>
         </div>
-        <div className="absolute right-5 top-5">
-          <Button onClick={toggleShowDistrictLayer}>我的足迹</Button>
-        </div>
+        {isVerified && (
+          <div className="absolute right-5 top-5">
+            <Button onClick={toggleShowDistrictLayer}>我的足迹</Button>
+          </div>
+        )}
         {showStatText && (
           <div className="absolute right-0 bottom-0 text-right">
             <StatText data={data} />

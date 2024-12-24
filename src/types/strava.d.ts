@@ -113,3 +113,27 @@ export interface RefreshTokenResponse {
   expires_in: number
   refresh_token: string
 }
+
+export interface AthleteResponse {
+  id: string
+  resource_state?: number
+  firstname?: string
+  lastname?: string
+  profile_medium?: string
+  profile?: string
+  city?: string
+  state?: string
+  country?: string
+  sex?: string
+  premium?: boolean
+  summit?: boolean
+  created_at: Date
+  updated_at: Date
+  clubs: any[]
+  bikes: []
+}
+
+export interface AthleteClubResponse {
+  id: number
+  name: string
+}

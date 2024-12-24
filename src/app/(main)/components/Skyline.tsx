@@ -7,7 +7,7 @@ import { Canvas, RootState } from '@react-three/fiber'
 import { DownloadIcon, Volume2Icon, VolumeXIcon } from 'lucide-react'
 import { useAtomValue } from 'jotai'
 
-import { dataAtom } from '@/store'
+import { dataAtom, isVerifiedAtom } from '@/store'
 import { Button } from '@/components/ui/button'
 import { Empty } from '@/components/empty'
 import TextGradient from '@/components/syntaxui/text-gradient'
@@ -18,6 +18,7 @@ import { useAudio } from './useAudio'
 
 export const Skyline: Component<{ userInfo: User }> = ({ userInfo }) => {
   const data = useAtomValue(dataAtom)
+  const isVerified = useAtomValue(isVerifiedAtom)
   const sceneRef = useRef<Scene>()
   const { isPlaying, togglePlay } = useAudio({})
 
@@ -59,14 +60,16 @@ export const Skyline: Component<{ userInfo: User }> = ({ userInfo }) => {
         </TextGradient>
       </div>
       <div className="absolute z-10 bottom-5 right-5 space-x-5">
-        <Button
-          size="icon"
-          variant="outline"
-          title="下载模型"
-          onClick={handleDownload}
-        >
-          <DownloadIcon />
-        </Button>
+        {isVerified && (
+          <Button
+            size="icon"
+            variant="outline"
+            title="下载模型"
+            onClick={handleDownload}
+          >
+            <DownloadIcon />
+          </Button>
+        )}
         <Button size="icon" variant="outline" onClick={() => togglePlay()}>
           {isPlaying ? <Volume2Icon /> : <VolumeXIcon />}
         </Button>

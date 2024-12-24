@@ -9,6 +9,8 @@ import { DetailedActivityResponse } from '@/types/strava'
 const history = new Map<number, AthleteData>()
 
 export const store = createStore()
+// 定义是否已验证用户
+export const isVerifiedAtom = atom(false)
 // 定义用于存储年份的 atom
 export const yearAtom = atom<number>()
 // 加载状态
@@ -156,20 +158,4 @@ function buildYearArray(year: number) {
       }
     },
   )
-}
-
-// 定义骑行距离等级
-function getLevel(value?: number) {
-  if (value === undefined) return 0
-  if (value > 200) {
-    return 4
-  } else if (value > 120) {
-    return 3
-  } else if (value > 50) {
-    return 2
-  } else if (value > 0) {
-    return 1
-  } else {
-    return 0
-  }
 }

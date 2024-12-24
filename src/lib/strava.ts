@@ -1,6 +1,10 @@
 import 'server-only'
 import { auth } from '@/auth'
-import { DetailedActivityResponse, RefreshTokenResponse } from '@/types/strava'
+import {
+  AthleteClubResponse,
+  DetailedActivityResponse,
+  RefreshTokenResponse,
+} from '@/types/strava'
 
 const STRAVA_BASE_URL = 'https://www.strava.com/api/v3'
 
@@ -40,6 +44,21 @@ export async function listActivities(
       },
     },
   )
+  const data = await res.json()
+  if (res.ok) {
+    return data
+  }
+  return Promise.reject(data)
+}
+// 获取用户俱乐部
+export async function getAthleteClubs(): Promise<AthleteClubResponse[]> {
+  const access_token = await getAccessToken()
+  const res = await fetch(STRAVA_BASE_URL + '/athlete/clubs', {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + access_token,
+    },
+  })
   const data = await res.json()
   if (res.ok) {
     return data
