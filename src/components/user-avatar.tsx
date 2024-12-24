@@ -27,7 +27,7 @@ export const UserAvatar: Component<{ userInfo: User }> = ({
           const clubs = (data.data as AthleteClubResponse[]).map(
             club => club.name,
           )
-          setIsVerified(!clubs.includes('G8 Cycling Club'))
+          setIsVerified(clubs.includes('G8 Cycling Club'))
         }
       })
   }, [])
