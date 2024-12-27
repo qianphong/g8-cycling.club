@@ -117,21 +117,23 @@ export const MapView: Component<{
         <div className="absolute right-5 top-5">
         </div>
       )} */}
-      <div
-        className={clsx(
-          'absolute right-0 transition-top w-60',
-          showStatText ? 'top-0' : '-top-[341px]',
-        )}
-        style={{ transition: 'top 0.3s' }}
-      >
-        <StatText data={data} />
+      {isVerified && (
         <div
-          className="h-10 bg-primary bg-opacity-30 rounded-b-5 flex items-center justify-center cursor-pointer"
-          onClick={toggleShowDistrictLayer}
+          className={clsx(
+            'absolute right-0 transition-top w-60',
+            showStatText ? 'top-0' : '-top-[341px]',
+          )}
+          style={{ transition: 'top 0.3s' }}
         >
-          我的足迹
+          <StatText data={data} />
+          <div
+            className="h-10 bg-primary bg-opacity-30 rounded-b-5 flex items-center justify-center cursor-pointer"
+            onClick={toggleShowDistrictLayer}
+          >
+            我的足迹
+          </div>
         </div>
-      </div>
+      )}
       {loading && (
         <div className="absolute top-0 left-0 w-full h-full z-10 flex itmes-center justify-center bg-white bg-opacity-30">
           <Image src="/disk.svg" width={200} height={200} alt="disk loading" />
