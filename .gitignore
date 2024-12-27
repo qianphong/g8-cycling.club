@@ -36,3 +36,4 @@ yarn-error.log*
 next-env.d.ts
 mysql
 backup
+/src/app/api/activities/data.json

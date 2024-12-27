@@ -1,12 +1,12 @@
 'use client'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AthleteData, Cities, TrackFeature } from '@/types'
-import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-import { motion, Variants } from 'framer-motion'
-import { FullscreenIcon } from 'lucide-react'
 import { useAtomValue } from 'jotai'
 import { isVerifiedAtom } from '@/store'
+import { MedalIcon } from 'lucide-react'
+import clsx from 'clsx'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 export const MapView: Component<{
   data: AthleteData
@@ -110,54 +110,33 @@ export const MapView: Component<{
       }
     }
   }
-
-  const [fullscreen, setFullscreen] = useState(false)
   return (
-    <div className="h-[600px]">
-      <motion.div
-        animate={fullscreen ? 'full' : 'exit'}
-        initial="exit"
-        className="relative h-full w-full left-0 top-0 z-10 overflow-hidden"
-        variants={{
-          full: {
-            position: 'absolute',
-          },
-          exit: {
-            position: 'relative',
-          },
-        }}
-      >
-        <div id="container" className="h-full w-full" />
-        <div className="absolute left-5 top-5">
-          <Button
-            size="icon"
-            variant="outline"
-            onClick={() => setFullscreen(full => !full)}
-          >
-            <FullscreenIcon />
-          </Button>
+    <div className="h-[600px] relative overflow-hidden">
+      <div id="container" className="h-full w-full" />
+      {/* {isVerified && (
+        <div className="absolute right-5 top-5">
         </div>
-        {isVerified && (
-          <div className="absolute right-5 top-5">
-            <Button onClick={toggleShowDistrictLayer}>我的足迹</Button>
-          </div>
+      )} */}
+      <div
+        className={clsx(
+          'absolute right-0 transition-top w-60',
+          showStatText ? 'top-0' : '-top-[341px]',
         )}
-        {showStatText && (
-          <div className="absolute right-0 bottom-0 text-right">
-            <StatText data={data} />
-          </div>
-        )}
-        {loading && (
-          <div className="absolute top-0 left-0 w-full h-full z-10 flex itmes-center justify-center bg-white bg-opacity-30">
-            <Image
-              src="/disk.svg"
-              width={200}
-              height={200}
-              alt="disk loading"
-            />
-          </div>
-        )}
-      </motion.div>
+        style={{ transition: 'top 0.3s' }}
+      >
+        <StatText data={data} />
+        <div
+          className="h-10 bg-primary bg-opacity-30 rounded-b-5 flex items-center justify-center cursor-pointer"
+          onClick={toggleShowDistrictLayer}
+        >
+          我的足迹
+        </div>
+      </div>
+      {loading && (
+        <div className="absolute top-0 left-0 w-full h-full z-10 flex itmes-center justify-center bg-white bg-opacity-30">
+          <Image src="/disk.svg" width={200} height={200} alt="disk loading" />
+        </div>
+      )}
     </div>
   )
 }
@@ -213,17 +192,6 @@ const setDistrictLayer = (city: Cities) => {
   return layer
 }
 
-const variants: Variants = {
-  show: {
-    y: 0,
-    opacity: 1,
-  },
-  hidden: {
-    y: 50,
-    opacity: 0,
-  },
-}
-
 const StatText: Component<{
   data: AthleteData
 }> = ({ data }) => {
@@ -232,105 +200,48 @@ const StatText: Component<{
     return Object.values(data.cities).sort((a, b) => b.count - a.count)
   }, [data.cities])
   return (
-    <motion.div
-      initial={'hidden'}
-      animate={'show'}
-      variants={{
-        show: {
-          transition: { staggerChildren: 0.2 },
-        },
-        hidden: {
-          transition: { staggerChildren: 0.2, staggerDirection: -1 },
-        },
-      }}
-      className="text-xl font-bold space-y-3 pointer-events-none p-5"
-    >
-      {/* <motion.div variants={variants}>
-        <span className="text-primary text-4xl font-bold mx-2 underline">
-          {data.year}
-        </span>
-        骑行
-        <span className="text-primary text-4xl font-bold mx-2 underline">
-          {data.totalRideCount}
-        </span>
-        次
-      </motion.div> */}
-      {list.length !== 0 && (
-        <>
-          <motion.div variants={variants}>
-            已累计点亮
-            <span className="text-primary text-5xl font-bold mx-2 underline">
+    <div className=" bg-black bg-opacity-60 border-x border-t border-primary">
+      <div className="p-5 flex items-center justify-between text-center">
+        <div>
+          <div className="text-sm">总运动次数</div>
+          <div>
+            <span className="text-3xl font-bold text-primary">
+              {data.totalRideCount}
+            </span>
+          </div>
+        </div>
+        <div>
+          <div className="text-sm">去过的城市</div>
+          <div>
+            <span className="text-3xl font-bold text-primary mr-2">
               {list.length}
             </span>
-            座城市
-          </motion.div>
-          <motion.div variants={variants}>
-            在
-            <div className="inline-block relative">
-              <span className="text-primary text-3xl font-bold mx-2 border-b border-primary">
-                {list[0].name}
-              </span>
-              <div className="text-primary text-sm font-bold absolute -bottom-5 w-full text-center">
-                {list[0].count}次
-              </div>
-            </div>
-            {/* <span className="text-primary text-3xl font-bold mx-2 underline">
-              {list[0].name}
-            </span> */}
-            骑行次数最多
-            {/* <span className="text-primary text-3xl font-bold mx-2 underline">
-              {list[0].count}
-            </span> */}
-          </motion.div>
-        </>
-      )}
-      {/* <motion.div variants={variants}>
-        骑行距离可绕地球
-        <div className="inline-block relative">
-          <span className="text-primary text-3xl font-bold px-4 underline">
-            {toFixed(data.totalRideDistance / 40000)}
-          </span>
-          <div className="text-primary text-xs absolute -bottom-4 w-full text-center">
-            {toFixed(data.totalRideDistance)} km
           </div>
         </div>
-        圈
-      </motion.div>
-      <motion.div variants={variants}>
-        爬升了
-        <div className="inline-block relative">
-          <span className="text-primary text-3xl font-bold mx-2 underline">
-            {toFixed(data.totalElevationGain / 8848)}
-          </span>
-          <div className="text-primary text-xs absolute -bottom-4 w-full text-center">
-            {toFixed(data.totalElevationGain)} m
-          </div>
-        </div>
-        个珠穆朗玛峰
-      </motion.div> */}
-
-      {/* <motion.div variants={variants}>
-        累计骑行时长
-        <span className="text-primary text-5xl font-bold mx-2">
-          {data.totalTime}
-        </span>
-        s
-      </motion.div> */}
-
-      {/* <motion.div variants={variants}>
-        最远骑行
-        <span className="text-primary text-5xl font-bold mx-2">
-          {toFixed(data.biggestRideDistance)}
-        </span>
-        km
-      </motion.div>
-      <motion.div variants={variants}>
-        最大爬升
-        <span className="text-primary text-5xl font-bold mx-2">
-          {toFixed(data.biggestElevationGain)}
-        </span>
-        m
-      </motion.div> */}
-    </motion.div>
+      </div>
+      <ScrollArea className="h-[244px]">
+        <ul>
+          {list.map((item, index) => {
+            return (
+              <li
+                key={item.adcode}
+                className={clsx('flex justify-between items-center py-2 px-5', {
+                  'bg-white bg-opacity-10': index % 2 === 0,
+                  'font-bold text-lg text-primary': index === 0,
+                })}
+              >
+                <div className="flex items-center">
+                  {item.name}
+                  {index === 0 && <MedalIcon size={18} className="ml-1" />}
+                </div>
+                <div>
+                  <span className="font-bold mr-2">{item.count}</span>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+      </ScrollArea>
+    </div>
   )
 }
