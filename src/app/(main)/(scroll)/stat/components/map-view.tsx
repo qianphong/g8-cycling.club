@@ -7,6 +7,7 @@ import { isVerifiedAtom } from '@/store'
 import { MedalIcon } from 'lucide-react'
 import clsx from 'clsx'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import Ranking from './ranking'
 
 export const MapView: Component<{
   data: AthleteData
@@ -113,24 +114,14 @@ export const MapView: Component<{
   return (
     <div className="h-[600px] relative overflow-hidden">
       <div id="container" className="h-full w-full" />
-      {/* {isVerified && (
-        <div className="absolute right-5 top-5">
-        </div>
-      )} */}
       {isVerified && (
-        <div
-          className={clsx(
-            'absolute right-0 transition-top w-60',
-            showStatText ? 'top-0' : '-top-[341px]',
-          )}
-          style={{ transition: 'top 0.3s' }}
-        >
+        <div className={clsx('absolute right-0 transition-top w-80 top-0')}>
           <StatText data={data} />
           <div
             className="h-10 bg-primary bg-opacity-30 rounded-b-5 flex items-center justify-center cursor-pointer"
             onClick={toggleShowDistrictLayer}
           >
-            我的足迹
+            查看去过的城市
           </div>
         </div>
       )}
@@ -203,7 +194,7 @@ const StatText: Component<{
   }, [data.cities])
   return (
     <div className=" bg-black bg-opacity-60 border-x border-t border-primary">
-      <div className="p-5 flex items-center justify-between text-center">
+      <div className="p-5 flex items-center justify-around text-center">
         <div>
           <div className="text-sm">总运动次数</div>
           <div>
@@ -216,34 +207,12 @@ const StatText: Component<{
           <div className="text-sm">去过的城市</div>
           <div>
             <span className="text-3xl font-bold text-primary mr-2">
-              {list.length}
+              {list.length || '?'}
             </span>
           </div>
         </div>
       </div>
-      <ScrollArea className="h-[244px]">
-        <ul>
-          {list.map((item, index) => {
-            return (
-              <li
-                key={item.adcode}
-                className={clsx('flex justify-between items-center py-2 px-5', {
-                  'bg-white bg-opacity-10': index % 2 === 0,
-                  'font-bold text-lg text-primary': index === 0,
-                })}
-              >
-                <div className="flex items-center">
-                  {item.name}
-                  {index === 0 && <MedalIcon size={18} className="ml-1" />}
-                </div>
-                <div>
-                  <span className="font-bold mr-2">{item.count}</span>
-                </div>
-              </li>
-            )
-          })}
-        </ul>
-      </ScrollArea>
+      {list.length > 0 && <Ranking data={list} />}
     </div>
   )
 }

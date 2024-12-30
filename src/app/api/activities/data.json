@@ -1739,8 +1739,78 @@
     ]
   },
   "2024": {
-    "lastUpdated": "2024-12-27",
+    "lastUpdated": "2024-12-30",
     "data": [
+      {
+        "resource_state": 2,
+        "athlete": {
+          "id": 116834393,
+          "resource_state": 1
+        },
+        "name": "Zwift - Group Ride: Rapha Festive 500 with Coco @ 2.6 W/KG on Waisted 8 in Watopia",
+        "distance": 43907.9,
+        "moving_time": 4683,
+        "elapsed_time": 4698,
+        "total_elevation_gain": 165,
+        "type": "VirtualRide",
+        "sport_type": "VirtualRide",
+        "id": 13200651376,
+        "start_date": "2024-12-27T12:31:47Z",
+        "start_date_local": "2024-12-27T20:31:47Z",
+        "timezone": "(GMT+08:00) Asia/Shanghai",
+        "utc_offset": 28800,
+        "location_city": null,
+        "location_state": null,
+        "location_country": "China",
+        "achievement_count": 4,
+        "kudos_count": 2,
+        "comment_count": 0,
+        "athlete_count": 52,
+        "photo_count": 0,
+        "map": {
+          "id": "a13200651376",
+          "summary_polyline": "nldfAkfez^mBsBiB?_ErKy@r@qAcAc@qCkByAiGqA{BJkB}@o@kCSsF`CeDR}Cc@wLu@gEuBk@sLzC{Fi@m@sB}DaFrAqSBoKd@_AxCoB]wAkCaBEmEqAkAgBOaB~EaBt@oHgKwB]{BxB~CtF[|DiBdAeDLwCbEeEq@yCv@wIpTjAnErHbDp@hCi@fEgInSBjD{B~B|DhFJhEu@pAmEjBoAbFZtAjFpEnBvFQvDsCjCfAbFqC|CeIPm@iA~@cD}By@AmBa@g@gFcB}Ap@e@bFkCEiAjAtBlFu@tGpB`Ix@lAdDv@tArCWbEkDbN`@|BdArCpBdCz@jIo@xHeDlHg@rD`@fCvBvCe@nFpApLsBp@Mp@tCjCP|@sIjHa@hEzAhFnBxBtPnHxEhL_@VuD}B}BxATpCdGpQ{AxDeCdDMpBfB~Ep@^lASx@iBrCu@pAv@f@lDI|DgBj@S`CvDrD|@JdGcBZt@{Cf@e@v@`MBhFvGnHe@nOzB`ImAlBNrNjFd@xCg@pFVt@dPStHjBnAzANpC}BzHqAtIuApCgHjFaFnFyCt@eDcAeCwCkF}PsIpCsC_@sJsJmB_LuHwLaAgFhAgFgDuG~BqI`C}BhGkMb@wFm@}NdBiL|G{GxBi@fDn@Vq@gAaAfDs@]w@eBQcAoCNo@rBg@X_AeCqEc@wDoDw@uIF@i@zNoB}@i@}JpAoA[N_Av@e@hMiCeHkOKmCdBcBlBl@nFbOzKOv@wAF{JlDkMCcT}BQaObE_CsHtIoDvk@wN@_M}EoFmBkHl@{IzDiAlBmB[o@sBEDk@pB]d@_C}@}AMwB{BcB[_CvAoBlBw@t@yD|KeGhAuCWuDuAoCwAk@kDA_@oCuByAuBf@aDpJu@t@oAu@m@eDgBqAeGqAgCHiBaA}@cK`C_DPcDg@uLq@}DoBo@{L~CuFk@q@qB{D_FpAuSBoKd@_AbCaATeA_@eAaCmAIsEiB}AyACwAvEgBz@yHuKkAYsA`@gAdBdDzFe@~DiBz@iDNoC|DwDq@kDv@mIjSAnB~@zBzHlDl@hCc@tDwInTNvC{B|BP|@nD~DD~DcAvA{DzAuA|ETzArFtEnBvFMpD{C|ClA~DOx@{BzBcITo@kA~@cD}By@@aBe@w@eFcBgBr@_@bFqCEgAdAtBnFu@xGtBhIr@dA`Dr@zApCWrEgDrM\\`CfAtCnBhCv@hHi@pIiDzHe@dDX~B`ChDc@tFnAnLwBp@Il@lD`EoI`H",
+          "resource_state": 2
+        },
+        "trainer": false,
+        "commute": false,
+        "manual": false,
+        "private": false,
+        "visibility": "everyone",
+        "flagged": false,
+        "gear_id": null,
+        "start_latlng": [
+          -11.65969,
+          166.979568
+        ],
+        "end_latlng": [
+          -11.635702,
+          166.950918
+        ],
+        "average_speed": 9.376,
+        "max_speed": 17.52,
+        "average_cadence": 82.8,
+        "average_watts": 158.5,
+        "max_watts": 358,
+        "weighted_average_watts": 183,
+        "device_watts": true,
+        "kilojoules": 742.5,
+        "has_heartrate": true,
+        "average_heartrate": 137.9,
+        "max_heartrate": 175,
+        "heartrate_opt_out": false,
+        "display_hide_heartrate_option": true,
+        "elev_high": 43.4,
+        "elev_low": -6.4,
+        "upload_id": 14077870207,
+        "upload_id_str": "14077870207",
+        "external_id": "zwift-activity-1773302057848045568.fit",
+        "from_accepted_tag": false,
+        "pr_count": 3,
+        "total_photo_count": 3,
+        "has_kudoed": false,
+        "suffer_score": 63
+      },
       {
         "resource_state": 2,
         "athlete": {

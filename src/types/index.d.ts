@@ -7,15 +7,12 @@ import type {
 } from 'geojson'
 
 /**城市信息 [province：省级行政区，city：市级行政区（可省略）] */
-export type Cities = Record<
-  string,
-  {
-    adcode: string
-    name: string
-    count: number
-  }
->
-
+export type Cities = Record<string, City>
+export type City = {
+  adcode: string
+  name: string
+  count: number
+}
 /**路线 Feature 的属性 */
 type TrackProperties = {
   /**骑行轨迹id */
