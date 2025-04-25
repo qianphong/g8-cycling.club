@@ -82,22 +82,46 @@ export const GET = async (request: NextRequest) => {
 }
 
 function fetchData(year: number) {
-  const quarters = [
-    { start: 8, end: 12 },
-    { start: 4, end: 8 },
-    { start: 0, end: 4 },
-  ]
+  const today = dayjs()
+  const currentYear = today.year()
+  const currentMonth = today.month() + 1
+
+  const quarters: { startDate: string; endDate: string }[] = []
+
+  if (year === currentYear) {
+    for (let start = 0; start < currentMonth; start += 4) {
+      const startMonth = String(start + 1).padStart(2, '0')
+      const startDate = `${year}-${startMonth}-01`
+
+      let endDate: string
+      if (start + 4 >= currentMonth) {
+        endDate = today.format('YYYY-MM-DD')
+      } else {
+        const endMonth = String(start + 4 + 1).padStart(2, '0')
+        endDate = `${year}-${endMonth}-01`
+      }
+
+      quarters.push({ startDate, endDate })
+    }
+  } else {
+    // 过去的年份，固定三段 4 个月
+    for (let start = 0; start < 12; start += 4) {
+      const startMonth = String(start + 1).padStart(2, '0')
+      const endMonth = String(start + 4 + 1).padStart(2, '0')
+      const startDate = `${year}-${startMonth}-01`
+      const endDate = `${year}-${endMonth}-01`
+      quarters.unshift({ startDate, endDate })
+    }
+  }
+  console.log('quarters', quarters)
   return Promise.all(
-    quarters.map((quarter: { start: number; end: number }) => {
-      return listActivities(
+    quarters.map(({ startDate, endDate }) =>
+      listActivities(
         new URLSearchParams({
           per_page: '130',
-          ...getUnixTimestamps(
-            `${year}-${quarter.start + 1}-01`,
-            `${year}-${quarter.end + 1}-01`,
-          ),
+          ...getUnixTimestamps(startDate, endDate),
         }),
-      )
-    }),
+      ),
+    ),
   )
 }
