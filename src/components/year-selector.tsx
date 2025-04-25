@@ -7,6 +7,7 @@ import { getData, loadingAtom, yearAtom } from '@/store'
 import { Button } from '@/components/ui/button'
 import { ArrowDownUpIcon, XIcon } from 'lucide-react'
 import Image from 'next/image'
+import { Icons } from './icons'
 
 export const YearSelector: Component<{}> = ({}) => {
   const year = useAtomValue(yearAtom)
@@ -71,8 +72,11 @@ export const YearSelector: Component<{}> = ({}) => {
           <p className="text-4xl my-4">每天骑行多少公里 ？</p>
           <p className="text-4xl my-4">去过哪些城市 ？</p>
         </TextGradient>
-        <div className="mt-10 mb-2 font-bold text-white text-opacity-50 text-sm lg:text-lg text-center">
-          根据 Strava 的数据，为你生成一份专属的骑行报告
+        <div className="mt-10 mb-2 font-bold text-gray-100 text-opacity-50 text-sm lg:text-lg text-center">
+          根据
+          <Icons.strava className="w-4 inline ml-2" />
+          <span className="text-[#FC4C02] mr-2">Strava</span>
+          的骑行数据，为你生成一份专属的骑行报告
           <br />
           现在让我们开始吧！
         </div>
