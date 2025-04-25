@@ -55,17 +55,17 @@ export const YearSelector: Component<{}> = ({}) => {
             opacity: 0,
           },
         }}
-        className="fixed left-0 w-screen h-screen bg-background flex flex-col z-10 items-center pt-24"
+        className="fixed left-0 w-screen h-screen bg-background flex flex-col z-10 items-center justify-center"
       >
         <Image
           src="/loading.svg"
           width={144}
           height={108}
           priority
-          className="mx-auto"
+          className="mx-auto pb-8"
           alt="loading"
         />
-        <TextGradient className="text-center mt-5">
+        <TextGradient className="text-center">
           <p className="text-5xl mb-5">这一年</p>
           <p className="text-4xl my-4">你骑行了多少天 ？</p>
           <p className="text-4xl my-4">每天骑行多少公里 ？</p>
@@ -95,6 +95,14 @@ export const YearSelector: Component<{}> = ({}) => {
             </button>
           </div>
         </div>
+        <Image
+          src="/qrcode.png"
+          width={140}
+          height={140}
+          priority
+          className="mx-auto mt-8"
+          alt="loading"
+        />
         <div className="absolute bottom-16">
           <Button
             size="icon"
