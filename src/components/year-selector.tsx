@@ -55,9 +55,17 @@ export const YearSelector: Component<{}> = ({}) => {
             opacity: 0,
           },
         }}
-        className="fixed left-0 w-screen h-screen bg-background flex flex-col z-10 items-center justify-center"
+        className="fixed left-0 w-screen h-screen bg-background flex flex-col z-10 items-center pt-24"
       >
-        <TextGradient className="text-center">
+        <Image
+          src="/loading.svg"
+          width={144}
+          height={108}
+          priority
+          className="mx-auto"
+          alt="loading"
+        />
+        <TextGradient className="text-center mt-5">
           <p className="text-5xl mb-5">这一年</p>
           <p className="text-4xl my-4">你骑行了多少天 ？</p>
           <p className="text-4xl my-4">每天骑行多少公里 ？</p>
@@ -87,7 +95,7 @@ export const YearSelector: Component<{}> = ({}) => {
             </button>
           </div>
         </div>
-        <div className="absolute bottom-5">
+        <div className="absolute bottom-16">
           <Button
             size="icon"
             variant="secondary"
@@ -108,7 +116,7 @@ const Loading = () => {
     <motion.div
       animate={'open'}
       initial={'closed'}
-      className=" fixed top-0 left-0 w-screen h-screen bg-background z-10 flex items-center justify-center"
+      className="fixed top-0 left-0 w-screen h-screen bg-background z-10 flex items-center justify-center"
       variants={{
         open: {
           opacity: 1,
