@@ -31,13 +31,13 @@ const calendarWeekWidth = 15
 // svg 的宽计算得出
 const width = calendarSize * calendarCols + calendarWeekWidth // 共计53周
 // 路线轨迹尺寸信息
-const trackCols = 8
+const trackCols = 10
 const trackGap = 20
 const trackSize = (width - (trackCols - 1) * trackGap) / trackCols
 const daysOfWeek = ['日', '一', '二', '三', '四', '五', '六']
 // 颜色
 const color = [
-  '#444444',
+  'rgba(200,200,200,0.5)',
   ...d3.quantize(d3.interpolateRgb('#F2CB05', '#F20505'), 5),
 ]
 const scale = d3
@@ -82,7 +82,8 @@ const renderText = (
     .attr('x', 0)
     .attr('y', 55)
     .attr('font-size', 42)
-    .style('fill', 'hsl(var(--foreground))')
+    .attr('font-weight', 'bold')
+    .style('fill', '#fff')
     .html(item => {
       return `${item.year}`
     })
@@ -95,7 +96,7 @@ const renderText = (
   //   .attr('y2', 64) // 终点 y 坐标
   //   .style('stroke', '#444444') // 线条颜色
   //   .attr('stroke-width', 1) // 线条宽度
-  renderStatText(group).attr('transform', `translate(${width - 250},${35})`)
+  renderStatText(group).attr('transform', `translate(${width - 280},${35})`)
 }
 const renderCalendar = (
   svg: d3.Selection<d3.BaseType, AthleteData, SVGSVGElement, unknown>,
@@ -131,9 +132,9 @@ const renderCalendar = (
     .join('text')
     .attr('x', x => (x - 1) * calendarSize + calendarWeekWidth)
     .attr('y', -6)
-    .style('fill', 'hsl(var(--foreground))')
+    .style('fill', '#fff')
     .style('font-size', 10)
-    .text((_, i) => `${i + 1}月`)
+    .text((_, i) => `${i + 1} 月`)
   // 周
   group
     .append('g')
@@ -144,8 +145,8 @@ const renderCalendar = (
     .attr('x', calendarWeekWidth - 4)
     .attr('y', (_, i) => i * calendarSize)
     .attr('dy', 11)
-    .style('fill', 'hsl(var(--foreground))')
-    .style('font-size', 10)
+    .style('fill', '#fff')
+    .style('font-size', 14)
     .text(i => i)
 }
 const renderTrack = (
@@ -171,36 +172,36 @@ const renderTrack = (
   group
     .append('path')
     .attr('stroke', f => getColor(f.properties.distance))
-    .attr('stroke-width', 1.5)
+    .attr('stroke-width', 3)
     .attr('fill', 'transparent')
     .attr('d', f => {
       const p = d3.geoMercator().fitSize([trackSize, trackSize], f)
       return d3.geoPath(p)(f)
     })
   // 添加覆盖的Rect元素，点击事件，划过效果
-  group
-    .append('rect')
-    .attr('height', trackSize)
-    .attr('width', trackSize)
-    .attr('data-id', f => f.properties.id)
-    .attr('fill', 'transparent')
-    .style('cursor', 'pointer')
-    .on('click', (e: MouseEvent) => {
-      const target = e.currentTarget as SVGRectElement
-      if (!target.dataset.id) return
-      window.open(
-        `https://www.strava.com/activities/${target.dataset.id}`,
-        '_blank',
-      )
-    })
-    .append('title')
-    .text(
-      f =>
-        `${f.properties.date}\n${f.properties.name}\n${f.properties.distance}km`,
-    )
+  // group
+  //   .append('rect')
+  //   .attr('height', trackSize)
+  //   .attr('width', trackSize)
+  //   .attr('data-id', f => f.properties.id)
+  //   .attr('fill', 'transparent')
+  //   .style('cursor', 'pointer')
+  //   .on('click', (e: MouseEvent) => {
+  //     const target = e.currentTarget as SVGRectElement
+  //     if (!target.dataset.id) return
+  //     window.open(
+  //       `https://www.strava.com/activities/${target.dataset.id}`,
+  //       '_blank',
+  //     )
+  //   })
+  //   .append('title')
+  //   .text(
+  //     f =>
+  //       `${f.properties.date}\n${f.properties.name}\n${f.properties.distance}km`,
+  //   )
 }
 const renderStatText = (svg: d3.Selection<any, AthleteData, any, unknown>) => {
-  const group = svg.append('g').attr('font-size', 14)
+  const group = svg.append('g').attr('font-size', 18)
   group
     .selectAll()
     .data(data => {
@@ -224,9 +225,7 @@ const renderStatText = (svg: d3.Selection<any, AthleteData, any, unknown>) => {
           y: 20,
           text: `时长：<tspan class="text-value">${Math.floor(
             data.totalTime / 3600,
-          )}</tspan>h <tspan class="text-value">${Math.floor(
-            (data.totalTime % 3600) / 60,
-          )}</tspan>m`,
+          )}</tspan> h`,
         },
         {
           x: 120,
@@ -238,7 +237,8 @@ const renderStatText = (svg: d3.Selection<any, AthleteData, any, unknown>) => {
       ]
     })
     .join('text')
-    .style('fill', 'hsl(var(--foreground))')
+    .style('font-weight', 'bold')
+    .style('fill', '#fff')
     .attr('x', d => d.x)
     .attr('y', d => d.y)
     .html(d => d.text)
@@ -247,15 +247,15 @@ const renderStatText = (svg: d3.Selection<any, AthleteData, any, unknown>) => {
 
 const renderLegend = (svg: d3.Selection<any, any, any, unknown>) => {
   const thresholds = scale.domain() // scaleQuantize
-  const legendWidth = 180
-  const height = 10
+  const legendWidth = 240
+  const height = 16
   const x = d3
     .scaleLinear()
     .domain([0, scale.range().length - 1])
     .rangeRound([0, legendWidth])
   const group = svg
     .append('g')
-    .attr('transform', `translate(${120},${titleHeight - 20})`)
+    .attr('transform', `translate(${120},${titleHeight - 30})`)
   group
     .append('g')
     .selectAll('rect')
@@ -274,12 +274,13 @@ const renderLegend = (svg: d3.Selection<any, any, any, unknown>) => {
       d3
         .axisTop(x)
         .tickSize(6)
-        .tickFormat(v => `${thresholds[Number(v)] - 1}+`)
+        .tickFormat(v => `${thresholds[Number(v)] - 1} +`)
         .tickValues(d3.range(thresholds.length)),
     )
     .call(g => {
       g.select('.domain').remove()
       g.selectAll('.tick line').remove()
+      g.selectAll('text').style('font-size', 14)
     })
   return group.node()
 }

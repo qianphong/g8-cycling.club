@@ -99,14 +99,14 @@ export const YearSelector: Component<{}> = ({}) => {
             </button>
           </div>
         </div>
-        <Image
+        {/* <Image
           src="/qrcode.png"
           width={140}
           height={140}
           priority
           className="mx-auto mt-8"
           alt="loading"
-        />
+        /> */}
         <div className="absolute bottom-16">
           <Button
             size="icon"

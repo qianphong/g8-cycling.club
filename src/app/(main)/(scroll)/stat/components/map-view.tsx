@@ -112,7 +112,7 @@ export const MapView: Component<{
     }
   }
   return (
-    <div className="h-[600px] relative overflow-hidden">
+    <div className="h-[800px] relative overflow-hidden">
       <div id="container" className="h-full w-full" />
       {isVerified && (
         <div className={clsx('absolute right-0 transition-top w-80 top-0')}>

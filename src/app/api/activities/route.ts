@@ -6,6 +6,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { formatDate, getUnixTimestamps } from '@/lib/date'
 import { listActivities } from '@/lib/strava'
 
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
 export const GET = async (request: NextRequest) => {
   const year = Number(request.nextUrl.searchParams.get('year'))
 
@@ -42,6 +44,7 @@ export const GET = async (request: NextRequest) => {
         // 写入文件
         await fs.writeFile(filePath, JSON.stringify(data, null, 2))
       }
+      await delay(2000)
       return NextResponse.json({
         success: true,
         message: '获取数据成功',
@@ -115,7 +118,7 @@ function fetchData(year: number) {
   }
   console.log('quarters', quarters)
   return Promise.all(
-    quarters.map(({ startDate, endDate }) =>
+    quarters.reverse().map(({ startDate, endDate }) =>
       listActivities(
         new URLSearchParams({
           per_page: '130',
